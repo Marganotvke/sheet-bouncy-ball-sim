@@ -6,7 +6,7 @@ import os
 import random
 
 class Scene(BaseScene):
-    particles = 200 # number of balls/particles
+    particles = 50 # number of balls/particles
     def __init__(self, *args, **kwargs):
         super(Scene, self).__init__(*args, **kwargs)
         self.cols, self.rows = self.get_terminal_size() # screen space
@@ -19,7 +19,7 @@ class Scene(BaseScene):
             ball.x = random.randrange(self.cols-10) # randomly distribute spawn location
             ball.y = random.randrange(self.rows-5)
             ball.color = random.choice(["red","green","blue","yellow","cyan","white","magenta"]) # colors
-            ball.dx = random.randint(0,3) # random x_axis acceleration
+            ball.dx = random.randint(-3,3) # random x_axis acceleration
             ball.dy = random.randint(1,3) # random y_axis acceleration
             ball.x_rbound = self.cols # right bound, aka walls
             ball.y_lbound = self.rows # lower bound, aka walls
@@ -70,7 +70,10 @@ class Ball(Object):
 
     def on_collision(self, obj): # check ball collision
         if isinstance(obj, Ball):
-            self.dx, obj.dx = obj.dx, self.dx
+            if obj.dx == 0 :
+                self.dx = obj.dx = self.dx//2 # collision speed transfer for stationary balls
+            else:
+                self.dx, obj.dx = obj.dx, self.dx # collision speed transfer
             self.dy, obj.dy = obj.dy, self.dy
 
 class Tip(Object):
