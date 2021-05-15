@@ -17,7 +17,7 @@ class Scene(BaseScene):
         for i in range(self.particles):
             ball = Ball()
             ball.x = random.randrange(self.cols-10) # randomly distribute spawn location
-            ball.y = random.randrange(self.rows-5)
+            ball.y = random.randrange(self.rows-5) # randomly distribute spawn location
             ball.color = random.choice(["red","green","blue","yellow","cyan","white","magenta"]) # colors
             ball.dx = random.randint(-3,3) # random x_axis acceleration
             ball.dy = random.randint(1,3) # random y_axis acceleration
@@ -38,7 +38,7 @@ class Ball(Object):
     dx = 2 # see above scene()
     dy = 2 # see above scene()
     x_lbound = 5 # x_axis left bound, aka wall
-    y_ubound = 5# y_axis upper bound, aka wall, uncomment follwing commented line to use
+    y_ubound = 5# y_axis upper bound, aka wall
     x_rbound = 0 # see above scene()
     y_lbound = 0 # see above scene()
     gravity = 1 # gravity
@@ -59,11 +59,11 @@ class Ball(Object):
             self.dy *= -1
         # if self.y <= self.y_ubound: # uncomment this if you want upper bound
         #     self.dy *= -1
-        if self.x >= self.x_rbound-5:
+        if self.x >= self.x_rbound-5: # right bound
             self.dx *= -1
-        if self.x <= self.x_lbound:
+        if self.x <= self.x_lbound: # left bound
             self.dx *= -1
-        if self.y <= self.y_lbound//2+(self.y_lbound//2)//2:
+        if self.y <= self.y_lbound//2+(self.y_lbound//2)//2: # my attempt at fixing the gravity function. For now it's pretty effective.
             self.gravity = 1
         else:
             self.gravity = 0
